@@ -1,0 +1,113 @@
+---
+title: "Informe Suicidios"
+author: "Ana Blanes Martinez - Xavier Castilla Carbonell"
+date: "26/5/2019"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 4
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Detalles de la actividad
+### 1.1 Descipción
+En esta actividad se elabora un caso práctico, consistente en el tratamiento de un conjunto de datos (en inglés, dataset), orientado a aprender a identiﬁcar los datos relevantes para un proyecto analítico y usar las herramientas de integración, limpieza, validación y análisis de las mismas.
+
+Para resolver la actividad se integrará un informe donde esten unificados los conceptos teoricos, objetivos y resolución con código R.
+
+El dataset usado se puede encontrar siguiendo el [enlace](https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016).
+
+### 1.2 Objetivos de la actividad
+Los objetivos que queremos cumplir mediante el desarrollo de esta actividad son los siguientes:
+
++ Aplicar conocimientos adquiridos en un ambito multidisciplinar en un entorno poco conocido
++ Identificar datos relevantes y tratamientos necesarios
++ Analizar los datos adecuadamente
++ Identificar la mejor representación de los resultados para aportar conclusiones sobre el problema planteado
++ Desarrollar las habilidades aprendidas
++ Desarrollar la capacidad de búsqueda, gestión y uso de la información en el ámbito de la ciencia de datos
+
+### 1.3 Competencias
+Así, las competencias del Máster en Data Science que se desarrollan son: 
++ Capacidad de analizar un problema en el nivel de abstracción adecuado a cada situación y aplicar las habilidades y conocimientos adquiridos para abordarlo y resolverlo. 
++ Capacidad para aplicar las técnicas especíﬁcas de tratamiento de datos (integración, transformación, limpieza y validación) para su posterior análisis.
+
+## 2. Resolución
+### 2.1 Descripción del dataset
+El siguiente dataset se ha construido a partir de distintos conjuntos de datos (referencias en la bibliografia) para su análisis. Se compone de 27820 con 12 campos.
+
+Estos son los campos que contiene:
+
++ **country**: Nombre del país
++ **year**: Año del registro
++ **sex**: Genero de la población 
++ **age**: Grupo de edad de la población del país ese año
++ **suicides_no**: Número de suicidios en el país ese año
++ **population**: Habitantes del país ese año
++ **suicides/100k pop** Numero de suicidios de la población por cada cien mil habitantes
++ **country-year**: Identificador compuesto por los campos país y año
++ **HDI for year**: (*Human Development Index*), es un indicador del desarrollo humano en base a la salud, la educación y la riqueza. El valor va de 0 a 1 siendo cuan más alto mejor.
++ **gdp_for_year ($)**: (*Gross domestic product*), expresa el valor monetario de la producción de bienes y servicios de un país
++ **gdp_per_capita ($)**: relación entre el GDP y la cantidad de población de un país
++ **generation**: Nombre de la generación a la que pertenece un grupo de población
+
+### 2.1 Importancia del análisis
+Este análisis es importante PORQUE SI
+
+
+### 1.2 Objetivos del análisis
+Los objetivos que queremos cumplir durante el desarrollo de esta actividad son los siguientes:
+
++ Identificar valores extremos
++ Limpiar los datos del conjunto de datos que sean irrelevantes o ""repetidos""
+  + Eliminar las columnas **Country-year**, **suicides_no**, **population** y **gdp_for_year ($)**
+  + Añadir la columna continente
+  + Completar el campo **HDI for year** que contiene elementos vacios con la media de los valores más aproximados, o descartandolos si no existen valores cercanos
++ Seleccionar los grupos de datos que sean interesantes de analizar/comparar
++ Realizar un analisis de los datos para conocer si existen diferencias entre distintas agrupaciones de población y cúal está más en riesgo:
+  + Por generación
+  + Por sexo
+  + Por grupo de edades
+  + Por gdb_per_capita
+  + Por continente
++ Crear un modelo regresivo con dos objetivos:
+  + Predicción de suicidios en un país en los próximos años
+  + Completar los datos de *HDI for year* descartados durante la limpieza de datos
++ Comprar y explicar países parecidos pero con tasas de suicidios muy dispares si es que existen
++ Representar mediante tablas y gráficas los datos y resultados
++ Responder las preguntas planteadas y sacar conclusiones
+
+### 2.1 Limpieza de los datos
+### 2.1 Análisis de los datos
+### 2.1 Pruebas estadísticas
+### 2.1 Conclusiones
+
+## 3. Recursos
+
+*Dataset*  
+https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
+
+*References*  
+United Nations Development Program. (2018). Human development index (HDI). Retrieved from http://hdr.undp.org/en/indicators/137506
+
+*World Bank. (2018). World development indicators: GDP (current US$) by country:1985 to 2016. Retrieved from*   http://databank.worldbank.org/data/source/world-development-indicators#
+
+*[Szamil]. (2017). Suicide in the Twenty-First Century [dataset]. Retrieved from*   https://www.kaggle.com/szamil/suicide-in-the-twenty-first-century/notebook
+
+*World Health Organization. (2018). Suicide prevention. Retrieved from*  
+http://www.who.int/mental_health/suicide-prevention/en/
+
+*Referencia de informe*  
+Gutierrez_teguayco_Practica_2__Limpieza_y_validacion_de__27_12_2017_07_31_05
+
+*Human Development Index (HDI)*  
+https://en.wikipedia.org/wiki/Human_Development_Index
+
+*Gross domestic product (GDP)*  
+https://en.wikipedia.org/wiki/Gross_domestic_product
+
+
