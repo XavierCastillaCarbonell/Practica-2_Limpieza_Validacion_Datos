@@ -77,7 +77,9 @@ dfSuicidiosFiltered5 <- getYearEveryYear(dfSuicidiosFiltered4)
 
 # Obtiene para cada país, los años disponibles
 getYearsForCountry <- function(df) {
+	results <- c()
 	j=0
+	k=0
 	country <- df[1,]$country
 	years <- c()
 	for(i in 1:nrow(df)) {
@@ -86,7 +88,8 @@ getYearsForCountry <- function(df) {
 			for(year in unique(years)) {
 				yearsString <- paste(yearsString,",",year);
 			}
-			print(paste(country,",",yearsString))
+			results[k] <- paste(country,",",yearsString,"\n")
+			k <- k +1
 			years <- c()
 			j=0
 		}
@@ -94,10 +97,69 @@ getYearsForCountry <- function(df) {
 		j <- j + 1
 		country <- df[i,]$country
 	}
+	return(results)
 }
 
 
-dfSuicidiosFiltered6 <- getYearsForCountry(dfSuicidiosFiltered4)
+write.table(getYearsForCountry(dfSuicidiosFiltered4), quote = FALSE, row.names=FALSE, file = "/Users/anablanesmartinez/MasterCienciaDatos/TipologiaCicloVidaDatos/PRAC2/results.txt")
+
+
+
+
+
+
+
+# Completa con los valores medios del valor anterior y próximo
+# Los últimos valores si son NA se quedan NA
+
+completeHDI_For_YearDatoPosterior <- function(df){
+		j <- 0;
+		country <- "";
+		vectorNA = c();
+		lastValue <- NA
+			
+		for(i in 1:nrow(df)) {
+			
+			if(i> 1 && (df[i-1,]$country !=df[i,]$country)) {
+				j <- 0;
+				vectorNA = c();
+				lastValue <- NA
+			}
+
+			
+			if(is.na(df[i,]$HDI_for_year)) {
+				vectorNA <- c(vectorNA,i);
+				j <- j+1;
+			} else {
+
+				if(is.na(lastValue)) {
+					lastValue <-df[i,]$HDI_for_year
+				}
+				
+				if(length(vectorNA)>0) {
+					for(value in vectorNA) {
+						hdi <- df[i,]$HDI_for_year
+						if(!is.na(lastValue)) {
+							hdi = (lastValue + df[i,]$HDI_for_year)/2
+							
+						}
+
+						df[value,]$HDI_for_year <- hdi;
+						vectorNA = c();
+						
+						j<-0;
+					}
+					lastValue <- df[i,]$HDI_for_year
+				}
+			}
+		}
+		return (df);
+		
+	}
+
+
+dfSuicidiosFiltered7 <- 	completeHDI_For_YearDatoPosterior(dfSuicidiosFiltered)
+
 
 
 
