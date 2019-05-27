@@ -74,8 +74,10 @@ dfSuicidiosFiltered5 <- getYearEveryYear(dfSuicidiosFiltered4)
 
 
 
+
 # Obtiene para cada país, los años disponibles
 getYearsForCountry <- function(df) {
+	j=0
 	country <- df[1,]$country
 	years <- c()
 	for(i in 1:nrow(df)) {
@@ -86,6 +88,7 @@ getYearsForCountry <- function(df) {
 			}
 			print(paste(country,",",yearsString))
 			years <- c()
+			j=0
 		}
 		years[j] <- df[i,]$year
 		j <- j + 1
@@ -94,7 +97,7 @@ getYearsForCountry <- function(df) {
 }
 
 
-
+dfSuicidiosFiltered6 <- getYearsForCountry(dfSuicidiosFiltered4)
 
 
 
