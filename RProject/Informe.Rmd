@@ -56,7 +56,13 @@ Estos son los campos que contiene:
 + **generation**: Nombre de la generación a la que pertenece un grupo de población
 
 ### 2.1 Importancia del análisis
-Este análisis es importante PORQUE SI
+Los suicidios son uno de los principales problemas de la sanidad pública presente en todos los países del mundo independientemente de su nivel económico, población o ubicación geográfica. Con este estudio pretendemos desevelar que sectores de la población están más en riesgo considerando su *edad*, *sexo* y *renta per capita* usando la información de distintos países a lo largo de los años.
+
+La finalidad del análisis es generar un informe sobre el risgo de cada grupo de población con el fin de ayudar a enfocar futuros proyectos a identificar las causas del suicidio en los grupos más desfavorecidos
+
+
+
+Juntar imagen de un histograma con la evolución de los suicidios/100k medios en el mundo por año
 
 
 ### 1.2 Objetivos del análisis
