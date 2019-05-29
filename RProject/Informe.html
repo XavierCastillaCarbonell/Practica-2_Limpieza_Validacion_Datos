@@ -191,6 +191,96 @@ window.buildTabsets = function(tocID) {
 </script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -354,13 +444,14 @@ $(document).ready(function () {
 <li><a href="#competencias">1.3 Competencias</a></li>
 </ul></li>
 <li><a href="#resolucion">2. Resolución</a><ul>
-<li><a href="#descripcion-del-dataset">2.1 Descripción del dataset</a></li>
-<li><a href="#importancia-del-analisis">2.1 Importancia del análisis</a></li>
-<li><a href="#objetivos-del-analisis">1.2 Objetivos del análisis</a></li>
-<li><a href="#limpieza-de-los-datos">2.1 Limpieza de los datos</a></li>
-<li><a href="#analisis-de-los-datos">2.1 Análisis de los datos</a></li>
-<li><a href="#pruebas-estadisticas">2.1 Pruebas estadísticas</a></li>
-<li><a href="#conclusiones">2.1 Conclusiones</a></li>
+<li><a href="#identificar-el-probla-y-objetivos-del-analisis">2.1 Identificar el probla y objetivos del análisis</a></li>
+<li><a href="#descripcion-del-dataset">2.2 Descripción del dataset</a></li>
+<li><a href="#preparacion-de-los-datos">2.3 Preparación de los datos</a></li>
+<li><a href="#limpieza-de-los-datos">2.4 Limpieza de los datos</a></li>
+<li><a href="#analisis-de-los-datos">2.5 Análisis de los datos</a></li>
+<li><a href="#pruebas-estadisticas">2.6 Pruebas estadísticas</a></li>
+<li><a href="#representacion-visual">2.7 Representación visual</a></li>
+<li><a href="#conclusiones">2.8 Conclusiones</a></li>
 </ul></li>
 <li><a href="#recursos">3. Recursos</a></li>
 </ul>
@@ -385,6 +476,7 @@ $(document).ready(function () {
 <li>Desarrollar las habilidades aprendidas</li>
 <li>Desarrollar la capacidad de búsqueda, gestión y uso de la información en el ámbito de la ciencia de datos</li>
 </ul>
+<p>Para ello desarrollaremos con un caso práctico las seis etapas de un proyecto analítico en ciencia de datos, <em>identificar el problema</em>, <em>recopilar y almacenar datos</em> relacionados, <em>limpiar los datos</em>, <em>analizar</em>, <em>representar</em> y <em>responderemos a la pregunta planteada</em>.</p>
 </div>
 <div id="competencias" class="section level3">
 <h3>1.3 Competencias</h3>
@@ -393,9 +485,17 @@ $(document).ready(function () {
 </div>
 <div id="resolucion" class="section level2">
 <h2>2. Resolución</h2>
+<div id="identificar-el-probla-y-objetivos-del-analisis" class="section level3">
+<h3>2.1 Identificar el probla y objetivos del análisis</h3>
+<p>Los suicidios son uno de los principales problemas de la sanidad pública presente en todos los países del mundo independientemente de su nivel económico, población o ubicación geográfica. Con este estudio pretendemos desevelar que sectores de la población están más en riesgo considerando su <em>edad</em>, <em>sexo</em>, <em>renta per capita</em> y <em>continente</em> usando la información de distintos países a lo largo de los años.</p>
+<p>La finalidad del análisis es generar un informe sobre el risgo de cada grupo de población con el fin de ayudar a enfocar futuros proyectos a identificar las causas del suicidio en los grupos más desfavorecidos</p>
+<p>Para ello mostraremos y compararemos los distintos grupos de población en base a: + Su generación + Su sexo + Su grupo de edades + Su gdb_per_capita + Su continente</p>
+<p>Además crearemos un modelo regresivo con los objetivos de: + Predecir la tasa de suicidios de un país en los próximos años + Completar los datos de HDI for year</p>
+<p>Y para finalizar buscaremos y compararemos países parecidos pero con tasas de suicidios muy dispares e intentaremos identificar las causas de este comportamiento si es que existen.</p>
+</div>
 <div id="descripcion-del-dataset" class="section level3">
-<h3>2.1 Descripción del dataset</h3>
-<p>El siguiente dataset se ha construido a partir de distintos conjuntos de datos (referencias en la bibliografia) para su análisis. Se compone de 27820 con 12 campos.</p>
+<h3>2.2 Descripción del dataset</h3>
+<p>El siguiente dataset se ha construido a partir de distintos conjuntos de datos (referencias en la bibliografia) para su análisis. Se compone de 27820 registros con 12 campos. Los registros están almacenados en un fichero CSV llamado <em>suicides</em> extaído de la web <em>Kaggle</em>.</p>
 <p>Estos son los campos que contiene:</p>
 <ul>
 <li><strong>country</strong>: Nombre del país</li>
@@ -407,56 +507,300 @@ $(document).ready(function () {
 <li><strong>suicides/100k pop</strong> Numero de suicidios de la población por cada cien mil habitantes</li>
 <li><strong>country-year</strong>: Identificador compuesto por los campos país y año</li>
 <li><strong>HDI for year</strong>: (<em>Human Development Index</em>), es un indicador del desarrollo humano en base a la salud, la educación y la riqueza. El valor va de 0 a 1 siendo cuan más alto mejor.</li>
-<li><strong>gdp_for_year ($)</strong>: (<em>Gross domestic product</em>), expresa el valor monetario de la producción de bienes y servicios de un país</li>
+<li><strong>gdp_for_year ($)</strong>: (<em>Gross domestic product</em>) (PIB), expresa el valor monetario de la producción de bienes y servicios de un país</li>
 <li><strong>gdp_per_capita ($)</strong>: relación entre el GDP y la cantidad de población de un país</li>
 <li><strong>generation</strong>: Nombre de la generación a la que pertenece un grupo de población</li>
 </ul>
 </div>
-<div id="importancia-del-analisis" class="section level3">
-<h3>2.1 Importancia del análisis</h3>
-<p>Este análisis es importante PORQUE SI</p>
-</div>
-<div id="objetivos-del-analisis" class="section level3">
-<h3>1.2 Objetivos del análisis</h3>
-<p>Los objetivos que queremos cumplir durante el desarrollo de esta actividad son los siguientes:</p>
+<div id="preparacion-de-los-datos" class="section level3">
+<h3>2.3 Preparación de los datos</h3>
+<p>Instalamos las librerias que necesitaremos durante el desarrollo:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co">#Preparación del análisis</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co">#install.packages(&quot;countrycode&quot;) ##Es necesario instalar el package para poder ejecutar el código</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">library</span>(countrycode)</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">library</span>(plyr)</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:plyr&#39;:
+## 
+##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+##     summarize</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<p>El primer paso de nuestro analisis es realizar la lectura del fichero en formato CSV <strong>suicide.csv</strong> en el que se encuentran nuestros datos. El resultado devuelto devuelto por la función <em>read.csv</em> será un objeto <em>data.frame</em>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co">#Lectura de datos</span></a>
+<a class="sourceLine" id="cb6-2" title="2">dfSuicidios &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;suicide.csv&quot;</span>, <span class="dt">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>);</a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="kw">colnames</span>(dfSuicidios)[<span class="kw">colnames</span>(dfSuicidios)<span class="op">==</span><span class="st">&quot;X.U.FEFF.country&quot;</span>] &lt;-<span class="st"> &quot;country&quot;</span></a></code></pre></div>
+<p>Analicemos el dataset para conocer que tipo de información contiene y como está distribuída:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">#Informe de los datos</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">summary</span>(dfSuicidios)</a></code></pre></div>
+<pre><code>##         country           year          sex                 age      
+##  Austria    :  382   Min.   :1985   female:13910   15-24 years:4642  
+##  Iceland    :  382   1st Qu.:1995   male  :13910   25-34 years:4642  
+##  Mauritius  :  382   Median :2002                  35-54 years:4642  
+##  Netherlands:  382   Mean   :2001                  5-14 years :4610  
+##  Argentina  :  372   3rd Qu.:2008                  55-74 years:4642  
+##  Belgium    :  372   Max.   :2016                  75+ years  :4642  
+##  (Other)    :25548                                                   
+##   suicides_no        population       suicides.100k.pop
+##  Min.   :    0.0   Min.   :     278   Min.   :  0.00   
+##  1st Qu.:    3.0   1st Qu.:   97498   1st Qu.:  0.92   
+##  Median :   25.0   Median :  430150   Median :  5.99   
+##  Mean   :  242.6   Mean   : 1844794   Mean   : 12.82   
+##  3rd Qu.:  131.0   3rd Qu.: 1486143   3rd Qu.: 16.62   
+##  Max.   :22338.0   Max.   :43805214   Max.   :224.97   
+##                                                        
+##       country.year    HDI.for.year            gdp_for_year....
+##  Albania1987:   12   Min.   :0.483   1,002,219,052,968:   12  
+##  Albania1988:   12   1st Qu.:0.713   1,011,797,457,139:   12  
+##  Albania1989:   12   Median :0.779   1,016,418,229    :   12  
+##  Albania1992:   12   Mean   :0.777   1,018,847,043,277:   12  
+##  Albania1993:   12   3rd Qu.:0.855   1,022,191,296    :   12  
+##  Albania1994:   12   Max.   :0.944   1,023,196,003,075:   12  
+##  (Other)    :27748   NA&#39;s   :19456   (Other)          :27748  
+##  gdp_per_capita....           generation  
+##  Min.   :   251     Boomers        :4990  
+##  1st Qu.:  3447     G.I. Generation:2744  
+##  Median :  9372     Generation X   :6408  
+##  Mean   : 16866     Generation Z   :1470  
+##  3rd Qu.: 24874     Millenials     :5844  
+##  Max.   :126352     Silent         :6364  
+## </code></pre>
+<p>Una rápida inspección no permite ver que algunas de las columnas del dataset no son necesarias pues son el resultado de una operación entre otras columnas, tenemos <strong>Country-year</strong>, <strong>suicides/100k pop</strong> y <strong>gdp_per_capita</strong>.</p>
+<p>Los casos de <em>suicides/100k pop</em> y <em>gdp_per_capita</em> son interesantes pues presentan una mediacion de los suicidios y el nivel de via mejor para realizar comparaciones ya que hay países con valores de población muy dispares (max: 43805214, min: 278) y lo mismo con el valor del PIB (max: 1.812e+13, min: 4.692e+07)</p>
+<p>Por eso eliminaremos las columnas: Country-year, suicides_no y gdp_for_year ($).</p>
+<p>Y trabajaremos con las columnas: <em>country</em>, <em>year</em>, <em>sex</em>, <em>age</em>, <em>suicides_100k_pop</em>, <em>HDI_for_year</em>, <em>gdp_per_capita_USDollar</em> y <em>generation</em> y agregaremos la columna <em>continent</em> para ubicar los distintos países en zonas geográficas.</p>
+<p>Analicemos cada una de estas variables: + <strong>Country</strong></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">#Informe de country</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">summary</span>(dfSuicidios<span class="op">$</span>country)</a></code></pre></div>
+<pre><code>##                      Austria                      Iceland 
+##                          382                          382 
+##                    Mauritius                  Netherlands 
+##                          382                          382 
+##                    Argentina                      Belgium 
+##                          372                          372 
+##                       Brazil                        Chile 
+##                          372                          372 
+##                     Colombia                      Ecuador 
+##                          372                          372 
+##                       Greece                       Israel 
+##                          372                          372 
+##                        Italy                        Japan 
+##                          372                          372 
+##                   Luxembourg                        Malta 
+##                          372                          372 
+##                       Mexico                  Puerto Rico 
+##                          372                          372 
+##            Republic of Korea                    Singapore 
+##                          372                          372 
+##                        Spain               United Kingdom 
+##                          372                          372 
+##                United States                    Australia 
+##                          372                          360 
+##                     Bulgaria                   Costa Rica 
+##                          360                          360 
+##                       France                    Guatemala 
+##                          360                          360 
+##                      Ireland                       Norway 
+##                          360                          360 
+##                       Sweden                       Canada 
+##                          358                          348 
+##                      Finland                  New Zealand 
+##                          348                          348 
+##                 Turkmenistan                       Belize 
+##                          348                          336 
+##                  Saint Lucia                     Suriname 
+##                          336                          336 
+##                      Ukraine                      Uruguay 
+##                          336                          336 
+##                      Romania                     Thailand 
+##                          334                          334 
+##          Antigua and Barbuda                     Paraguay 
+##                          324                          324 
+##                     Portugal           Russian Federation 
+##                          324                          324 
+##          Trinidad and Tobago               Czech Republic 
+##                          324                          322 
+##                      Germany                   Kazakhstan 
+##                          312                          312 
+##                   Kyrgyzstan                      Grenada 
+##                          312                          310 
+##                      Hungary                     Barbados 
+##                          310                          300 
+##                       Guyana                       Kuwait 
+##                          300                          300 
+##                       Panama Saint Vincent and Grenadines 
+##                          300                          300 
+##                      Armenia                         Cuba 
+##                          298                          288 
+##                  El Salvador                       Poland 
+##                          288                          288 
+##                      Bahamas                      Albania 
+##                          276                          264 
+##                      Denmark                      Georgia 
+##                          264                          264 
+##                     Slovakia                   Uzbekistan 
+##                          264                          264 
+##                      Croatia                    Lithuania 
+##                          262                          262 
+##                      Bahrain                      Belarus 
+##                          252                          252 
+##                      Estonia                       Latvia 
+##                          252                          252 
+##                     Slovenia                  Switzerland 
+##                          252                          252 
+##                 South Africa                       Serbia 
+##                          240                          216 
+##                   Seychelles                      Jamaica 
+##                          216                          204 
+##                   Azerbaijan                  Philippines 
+##                          192                          180 
+##                       Cyprus                        Qatar 
+##                          178                          178 
+##                        Aruba                         Fiji 
+##                          168                          132 
+##                     Kiribati                    Sri Lanka 
+##                          132                          132 
+##                     Maldives                   Montenegro 
+##                          120                          120 
+##                       Turkey                    Nicaragua 
+##                           84                           72 
+##         United Arab Emirates                         Oman 
+##                           72                           36 
+##        Saint Kitts and Nevis                   San Marino 
+##                           36                           36 
+##       Bosnia and Herzegovina                   Cabo Verde 
+##                           24                           12 
+##                     Dominica                      (Other) 
+##                           12                           22</code></pre>
 <ul>
-<li>Identificar valores extremos</li>
-<li>Limpiar los datos del conjunto de datos que sean irrelevantes o &quot;“repetidos”&quot;
-<ul>
-<li>Eliminar las columnas <strong>Country-year</strong>, <strong>suicides_no</strong>, <strong>population</strong> y <strong>gdp_for_year ($)</strong></li>
-<li>Añadir la columna continente</li>
-<li>Completar el campo <strong>HDI for year</strong> que contiene elementos vacios con la media de los valores más aproximados, o descartandolos si no existen valores cercanos</li>
-</ul></li>
-<li>Seleccionar los grupos de datos que sean interesantes de analizar/comparar</li>
-<li>Realizar un analisis de los datos para conocer si existen diferencias entre distintas agrupaciones de población y cúal está más en riesgo:
-<ul>
-<li>Por generación</li>
-<li>Por sexo</li>
-<li>Por grupo de edades</li>
-<li>Por gdb_per_capita</li>
-<li>Por continente</li>
-</ul></li>
-<li>Crear un modelo regresivo con dos objetivos:
-<ul>
-<li>Predicción de suicidios en un país en los próximos años</li>
-<li>Completar los datos de <em>HDI for year</em> descartados durante la limpieza de datos</li>
-</ul></li>
-<li>Comprar y explicar países parecidos pero con tasas de suicidios muy dispares si es que existen</li>
-<li>Representar mediante tablas y gráficas los datos y resultados</li>
-<li>Responder las preguntas planteadas y sacar conclusiones</li>
+<li><strong>Year</strong></li>
 </ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co">#Informe de country</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw">summary</span>(dfSuicidios<span class="op">$</span>year)</a></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1985    1995    2002    2001    2008    2016</code></pre>
+<ul>
+<li><strong>Sex</strong></li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co">#Informe de country</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="kw">summary</span>(dfSuicidios<span class="op">$</span>sex)</a></code></pre></div>
+<pre><code>## female   male 
+##  13910  13910</code></pre>
+<ul>
+<li><strong>Age</strong></li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co">#Informe de country</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="kw">summary</span>(dfSuicidios<span class="op">$</span>age)</a></code></pre></div>
+<pre><code>## 15-24 years 25-34 years 35-54 years  5-14 years 55-74 years   75+ years 
+##        4642        4642        4642        4610        4642        4642</code></pre>
+<ul>
+<li><strong>suicides_100k_pop</strong></li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co">#Informe de country</span></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="kw">summary</span>(dfSuicidios<span class="op">$</span>suicides<span class="fl">.100</span>k.pop)</a></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    0.00    0.92    5.99   12.82   16.62  224.97</code></pre>
+<ul>
+<li><strong>HDI_for_year</strong></li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="co">#Informe de country</span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="kw">summary</span>(dfSuicidios<span class="op">$</span>HDI.for.year)</a></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   0.483   0.713   0.779   0.777   0.855   0.944   19456</code></pre>
+<ul>
+<li><strong>gdp_per_capita_USDollar</strong></li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co">#Informe de country</span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="kw">summary</span>(dfSuicidios<span class="op">$</span>gdp_per_capita....)</a></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     251    3447    9372   16866   24874  126352</code></pre>
+<p>El campo HDI_for_year requiere un tratamiento especial pues contiene Na’s, lo que haremos será completar este dato estimando la media entre los dos valores más cercanos (uno de años anteriores y otro de años posteriores).</p>
 </div>
 <div id="limpieza-de-los-datos" class="section level3">
-<h3>2.1 Limpieza de los datos</h3>
+<h3>2.4 Limpieza de los datos</h3>
+<p>El primer paso será crear la nueva columna <strong>continent</strong> mediante el campo <em>country</em> y usando la libreria <em>countrycode</em>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">dfSuicidios<span class="op">$</span>continent &lt;-<span class="st"> </span><span class="kw">countrycode</span>(<span class="dt">sourcevar =</span> dfSuicidios[, <span class="st">&quot;country&quot;</span>], <span class="dt">origin =</span> <span class="st">&quot;country.name&quot;</span>, <span class="dt">destination =</span> <span class="st">&quot;continent&quot;</span>)</a></code></pre></div>
+<p>Renombrarmos las columnas con espacios y simbolos para que sean más fáciles de manejar:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">colnames</span>(dfSuicidios)[<span class="kw">colnames</span>(dfSuicidios)<span class="op">==</span><span class="st">&quot;gdp_per_capita....&quot;</span>] &lt;-<span class="st"> &quot;gdp_per_capita_USDollar&quot;</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="kw">colnames</span>(dfSuicidios)[<span class="kw">colnames</span>(dfSuicidios)<span class="op">==</span><span class="st">&quot;gdp_for_year....&quot;</span>] &lt;-<span class="st"> &quot;gdp_for_year_USDollar&quot;</span></a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="kw">colnames</span>(dfSuicidios)[<span class="kw">colnames</span>(dfSuicidios)<span class="op">==</span><span class="st">&quot;HDI.for.year&quot;</span>] &lt;-<span class="st"> &quot;HDI_for_year&quot;</span></a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="kw">colnames</span>(dfSuicidios)[<span class="kw">colnames</span>(dfSuicidios)<span class="op">==</span><span class="st">&quot;country.year&quot;</span>] &lt;-<span class="st"> &quot;country_year&quot;</span></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="kw">colnames</span>(dfSuicidios)[<span class="kw">colnames</span>(dfSuicidios)<span class="op">==</span><span class="st">&quot;suicides.100k.pop&quot;</span>] &lt;-<span class="st"> &quot;suicides_100k_pop&quot;</span></a></code></pre></div>
+<p>Y nos quedamos con las columnas deseadas:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1">keeps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;country&quot;</span>,<span class="st">&quot;continent&quot;</span>, <span class="st">&quot;year&quot;</span>,<span class="st">&quot;sex&quot;</span>,<span class="st">&quot;age&quot;</span>,<span class="st">&quot;suicides_100k_pop&quot;</span>,<span class="st">&quot;HDI_for_year&quot;</span>,<span class="st">&quot;gdp_per_capita_USDollar&quot;</span>,<span class="st">&quot;generation&quot;</span>)</a>
+<a class="sourceLine" id="cb25-2" title="2">dfSuicidiosFiltered &lt;-<span class="st"> </span>dfSuicidios[keeps]</a></code></pre></div>
+<p><strong>Mover esta función a un fichero de funciones</strong></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">completeHDI_For_YearDatoPosteriorMedia &lt;-<span class="st"> </span><span class="cf">function</span>(df){</a>
+<a class="sourceLine" id="cb26-2" title="2">        j &lt;-<span class="st"> </span><span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb26-3" title="3">        country &lt;-<span class="st"> &quot;&quot;</span>;</a>
+<a class="sourceLine" id="cb26-4" title="4">        vectorNA =<span class="st"> </span><span class="kw">c</span>();</a>
+<a class="sourceLine" id="cb26-5" title="5">        lastValue &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb26-6" title="6">            </a>
+<a class="sourceLine" id="cb26-7" title="7">        <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(df)) {</a>
+<a class="sourceLine" id="cb26-8" title="8">            </a>
+<a class="sourceLine" id="cb26-9" title="9">            <span class="cf">if</span>(i<span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span> <span class="op">&amp;&amp;</span><span class="st"> </span>(df[i<span class="dv">-1</span>,]<span class="op">$</span>country <span class="op">!=</span>df[i,]<span class="op">$</span>country)) {</a>
+<a class="sourceLine" id="cb26-10" title="10">                j &lt;-<span class="st"> </span><span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb26-11" title="11">                vectorNA =<span class="st"> </span><span class="kw">c</span>();</a>
+<a class="sourceLine" id="cb26-12" title="12">                lastValue &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb26-13" title="13">            }</a>
+<a class="sourceLine" id="cb26-14" title="14"></a>
+<a class="sourceLine" id="cb26-15" title="15">            </a>
+<a class="sourceLine" id="cb26-16" title="16">            <span class="cf">if</span>(<span class="kw">is.na</span>(df[i,]<span class="op">$</span>HDI_for_year)) {</a>
+<a class="sourceLine" id="cb26-17" title="17">                vectorNA &lt;-<span class="st"> </span><span class="kw">c</span>(vectorNA,i);</a>
+<a class="sourceLine" id="cb26-18" title="18">                j &lt;-<span class="st"> </span>j<span class="op">+</span><span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb26-19" title="19">            } <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb26-20" title="20"></a>
+<a class="sourceLine" id="cb26-21" title="21">                <span class="cf">if</span>(<span class="kw">is.na</span>(lastValue)) {</a>
+<a class="sourceLine" id="cb26-22" title="22">                    lastValue &lt;-df[i,]<span class="op">$</span>HDI_for_year</a>
+<a class="sourceLine" id="cb26-23" title="23">                }</a>
+<a class="sourceLine" id="cb26-24" title="24">                </a>
+<a class="sourceLine" id="cb26-25" title="25">                <span class="cf">if</span>(<span class="kw">length</span>(vectorNA)<span class="op">&gt;</span><span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb26-26" title="26">                    <span class="cf">for</span>(value <span class="cf">in</span> vectorNA) {</a>
+<a class="sourceLine" id="cb26-27" title="27">                        hdi &lt;-<span class="st"> </span>df[i,]<span class="op">$</span>HDI_for_year</a>
+<a class="sourceLine" id="cb26-28" title="28">                        <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.na</span>(lastValue)) {</a>
+<a class="sourceLine" id="cb26-29" title="29">                            hdi =<span class="st"> </span>(lastValue <span class="op">+</span><span class="st"> </span>df[i,]<span class="op">$</span>HDI_for_year)<span class="op">/</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb26-30" title="30">                            </a>
+<a class="sourceLine" id="cb26-31" title="31">                        }</a>
+<a class="sourceLine" id="cb26-32" title="32"></a>
+<a class="sourceLine" id="cb26-33" title="33">                        df[value,]<span class="op">$</span>HDI_for_year &lt;-<span class="st"> </span>hdi;</a>
+<a class="sourceLine" id="cb26-34" title="34">                        vectorNA =<span class="st"> </span><span class="kw">c</span>();</a>
+<a class="sourceLine" id="cb26-35" title="35">                        </a>
+<a class="sourceLine" id="cb26-36" title="36">                        j&lt;-<span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb26-37" title="37">                    }</a>
+<a class="sourceLine" id="cb26-38" title="38">                    lastValue &lt;-<span class="st"> </span>df[i,]<span class="op">$</span>HDI_for_year</a>
+<a class="sourceLine" id="cb26-39" title="39">                }</a>
+<a class="sourceLine" id="cb26-40" title="40">            }</a>
+<a class="sourceLine" id="cb26-41" title="41">        }</a>
+<a class="sourceLine" id="cb26-42" title="42">        <span class="kw">return</span> (df);</a>
+<a class="sourceLine" id="cb26-43" title="43">        </a>
+<a class="sourceLine" id="cb26-44" title="44">    }</a></code></pre></div>
+<p>Completamos los datos de <em>HDI_For_Year</em></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">dfSuicidiosFiltered &lt;-<span class="st"> </span><span class="kw">completeHDI_For_YearDatoPosteriorMedia</span>(dfSuicidiosFiltered)</a></code></pre></div>
+<p>Agrupamos los países en periodos de 5 años para poder compararlos mejor <strong>AÑADIR EXPLICACIÓN ARRIBA</strong></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">dfSuicidiosFiltered<span class="op">$</span>yearRange5Years&lt;-<span class="kw">cut</span>(dfSuicidiosFiltered<span class="op">$</span>year, <span class="kw">c</span>(<span class="dv">1980</span>,<span class="dv">1985</span>,<span class="dv">1990</span>,<span class="dv">1995</span>,<span class="dv">2000</span>,<span class="dv">2005</span>,<span class="dv">2010</span>,<span class="dv">2015</span>,<span class="dv">2020</span>))</a>
+<a class="sourceLine" id="cb28-2" title="2"></a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="co"># Muestra medias de suicidios, gdp, hdi agrupoado por country, continent, yearRange5Years. Si se quiere agrupar por continente nada más, se deja solo continente</span></a>
+<a class="sourceLine" id="cb28-4" title="4">dfSuicidiosFiltered2 &lt;-<span class="st"> </span><span class="kw">ddply</span>(dfSuicidiosFiltered, .(country, continent,yearRange5Years), summarize,  <span class="dt">mean_suicides_100k_pop=</span><span class="kw">mean</span>(suicides_100k_pop), <span class="dt">mean_HDI_for_year=</span><span class="kw">mean</span>(HDI_for_year), <span class="dt">mean_gdp_per_capita_USDollar=</span><span class="kw">mean</span>(gdp_per_capita_USDollar))</a></code></pre></div>
 </div>
 <div id="analisis-de-los-datos" class="section level3">
-<h3>2.1 Análisis de los datos</h3>
+<h3>2.5 Análisis de los datos</h3>
 </div>
 <div id="pruebas-estadisticas" class="section level3">
-<h3>2.1 Pruebas estadísticas</h3>
+<h3>2.6 Pruebas estadísticas</h3>
+</div>
+<div id="representacion-visual" class="section level3">
+<h3>2.7 Representación visual</h3>
 </div>
 <div id="conclusiones" class="section level3">
-<h3>2.1 Conclusiones</h3>
+<h3>2.8 Conclusiones</h3>
 </div>
 </div>
 <div id="recursos" class="section level2">
@@ -475,6 +819,7 @@ Gutierrez_teguayco_Practica_2__Limpieza_y_validacion_de__27_12_2017_07_31_05</p>
 <a href="https://en.wikipedia.org/wiki/Human_Development_Index" class="uri">https://en.wikipedia.org/wiki/Human_Development_Index</a></p>
 <p><em>Gross domestic product (GDP)</em><br />
 <a href="https://en.wikipedia.org/wiki/Gross_domestic_product" class="uri">https://en.wikipedia.org/wiki/Gross_domestic_product</a></p>
+<p><em>Package ‘countrycode’</em> <a href="https://cran.r-project.org/web/packages/countrycode/countrycode.pdf" class="uri">https://cran.r-project.org/web/packages/countrycode/countrycode.pdf</a></p>
 </div>
 
 
