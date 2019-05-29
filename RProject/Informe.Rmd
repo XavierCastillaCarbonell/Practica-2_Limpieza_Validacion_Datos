@@ -65,7 +65,7 @@ La finalidad del análisis es generar un informe sobre el risgo de cada grupo de
 Juntar imagen de un histograma con la evolución de los suicidios/100k medios en el mundo por año
 
 
-### 1.2 Objetivos del análisis
+### 2.2 Objetivos del análisis
 Los objetivos que queremos cumplir durante el desarrollo de esta actividad son los siguientes:
 
 + Identificar valores extremos
@@ -87,7 +87,31 @@ Los objetivos que queremos cumplir durante el desarrollo de esta actividad son l
 + Representar mediante tablas y gráficas los datos y resultados
 + Responder las preguntas planteadas y sacar conclusiones
 
+### 2.3 Descripción del Dataset
+### 2.3 Preparación de los datos
+Instalamos las librerias que necesitaremos durante el desarrollo
+```{r}
+install.packages("countrycode")
+library(countrycode)
+```
+
+Cargamos el dataset **suicide.csv**
+```{r}
+dfSuicidios <- read.csv("suicide.csv", encoding = "UTF-8", header = TRUE);
+```
 ### 2.1 Limpieza de los datos
+```{r}
+dfSuicidios$continent <- countrycode(sourcevar = dfSuicidios[, "country"], origin = "country.name", destination = "continent")
+colnames(dfSuicidios)[colnames(dfSuicidios)=="gdp_per_capita...."] <- "gdp_per_capita_USDollar"
+colnames(dfSuicidios)[colnames(dfSuicidios)=="gdp_for_year...."] <- "gdp_for_year_USDollar"
+colnames(dfSuicidios)[colnames(dfSuicidios)=="HDI.for.year"] <- "HDI_for_year"
+colnames(dfSuicidios)[colnames(dfSuicidios)=="country.year"] <- "country_year"
+colnames(dfSuicidios)[colnames(dfSuicidios)=="suicides.100k.pop"] <- "suicides_100k_pop"
+
+keeps <- c("country","continent", "year","sex","age","suicides_100k_pop","HDI_for_year","gdp_per_capita_USDollar","generation")
+dfSuicidiosFiltered <- dfSuicidios[keeps]
+
+```
 ### 2.1 Análisis de los datos
 ### 2.1 Pruebas estadísticas
 ### 2.1 Conclusiones
