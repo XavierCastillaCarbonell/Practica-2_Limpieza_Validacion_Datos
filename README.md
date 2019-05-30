@@ -1,2 +1,2 @@
-# Practica_2_XavierCastillaCarbonell - Ana Blanes Martinez
+# XavierCastillaCarbonell - Ana Blanes Martinez
 

@@ -2,11 +2,14 @@
 title: "Informe Suicidios"
 author: "Ana Blanes Martinez - Xavier Castilla Carbonell"
 date: "26/5/2019"
-output: 
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
   html_document:
-    toc: true
-    toc_depth: 4
     highlight: tango
+    toc: yes
+    toc_depth: 4
 ---
 
 ```{r setup, include=FALSE}
@@ -240,7 +243,84 @@ dfSuicidiosFiltered$yearRange5Years<-cut(dfSuicidiosFiltered$year, c(1980,1985,1
 dfSuicidiosFiltered2 <- ddply(dfSuicidiosFiltered, .(country, continent,yearRange5Years), summarize,  mean_suicides_100k_pop=mean(suicides_100k_pop), mean_HDI_for_year=mean(HDI_for_year), mean_gdp_per_capita_USDollar=mean(gdp_per_capita_USDollar))
 ```
 
+Para finalizar comprobamos que tenemos el subset adecuado
+```{r}
+str(dfSuicidiosFiltered2)
+```
 ### 2.5 Análisis de los datos
+#### Analisis de suicidios por población
+La columna suicides_100k_pop nos informa de la tasa de suicidios por cada cien mil personas (S100K), por lo que es una variable que nos permite
+comparar los disitntos registros en una misma escala.
+
+Calculemos la media, la mediana y la desviación estandar de S100K:
+```{r}
+mean(dfSuicidiosFiltered$suicides_100k_pop)
+median(dfSuicidiosFiltered$suicides_100k_pop)
+sd(dfSuicidiosFiltered$suicides_100k_pop)
+```
+
+La media es bastante más grande que la mediana lo que nos indica que los valores elevados de la columna son muy elevados respecto a los valores más bajos. Esto se ve confirmado por la desviación estándar que es muy elevada, lo que indica que el rango de valores es muy disperso.
+
+Por eso si representamos los datos en un boxplot nos queda la caja aplastada en el fondo, la mayoria de los datos son bajos pero los valores extremos son muy elevados.
+```{r}
+boxplot(dfSuicidiosFiltered$suicides_100k_pop)
+```
+
+Visualicemos la relación de estos datos con el HDI_for_year, el gdp_per_capita y el año
+```{r}
+# Scatterplot relacionando Human_Development_Index y S100K
+plot(dfSuicidiosFiltered$HDI_for_year, dfSuicidiosFiltered$suicides_100k_pop, xlab = "Human_Development_Index", ylab = "S100K", pch = 16, col = "blue",
+     main = " Scatterplot de Human_Development_Index vs S100K") 
+```
+
+Con este gráfico relacionando el HDI con los suicidios vemos que forma una campana de gauss desviada hacia la derecha. Los países menos desarrollados (HDI < 0.55) están en menor riesgo de suicidarse y ese riesgo va aumentando hasta un punto de inflexión (HDI > 0.75) donde la tónica es de descenso. Esto nos indica que las causas de suicidio pueden estar condicionadas por los factores que alteran el desarrollo de un país hasta que alcanza cierto punto en que la mejora estatal hace descender la tasa de suicidios.
+En este caso podemos identificar que los países en desarrollo son los que están más en riesgo.
+
+```{r}
+# Scatterplot relacionando gdp_per_capita y S100K
+plot(dfSuicidiosFiltered$gdp_per_capita_USDollar, dfSuicidiosFiltered$suicides_100k_pop, xlab = "GDP per capita USDollar", ylab = "S100K", pch = 16, col = "blue",
+     main = " Scatterplot de GDP per capita vs S100K") 
+```
+
+En el gráfico que relaciona el PIB per capita con la tasa de suicidios apreciamos que hay un rápido descenso de los suicidios a medida que aumenta la renta de los individuos pero sobre los 60K de renta la caída se convierte en una linea recta.
+
+Esto nos indica que el nivel de vida es una de las causas principales de suicidio entre las rentas más bajas pero se vuelve más indiferente cuan más alto es, indicando que existen otros factores a tener en cuenta.
+
+
+```{r}
+# Scatterplot relacionando año y S100K
+plot(dfSuicidiosFiltered$year, dfSuicidiosFiltered$suicides_100k_pop, xlab = "Human_Development_Index", ylab = "Año", pch = 16, col = "blue",
+     main = " Scatterplot de Año vs S100K") 
+```
+
+En el gráfico que relaciona los suicidios con los años apreciamos que no hay relación alguna entre las dos variables y los valores que destacan se deberán a factores alternativos.
+
+
+#### Analisis por generation
+En este apartado haremos un seguimiento y comparación de las distintas generaciones. Primero agruparemos los datos por generaciones,
+mostraremos el número de suicidios totales y relativos e identificaremos que generación ha sufrido mayor riesgo.
+
+```{r}
+#Mostrar generaciones disponibles
+#table(dfSuicidiosFiltered$generation)
+```
+
+```{r}
+#Agrupar por generaciones, con todas las columnas posibles. Media de HDI, media de suicides_100k_pop y media de gdp_per_capita, sexo y año
+aggregate(dfSuicidiosFiltered, by = dfSuicidiosFiltered$generation)
+```
+
+```{r}
+#Grafica de barras de los suicidios totales y los suicidios relativos ordenando las generaciones de vieja a nueva
+```
+
+Comprovemos la desviación estandar entre las generaciones
+```{r}
+#sd(dfSuicidiosFiltered$suicides_100k_pop)
+```
+
+**SACAR CONCLUISIONES DE LOS RESULTADOS**
+
 ### 2.6 Pruebas estadísticas
 ### 2.7 Representación visual
 ### 2.8 Conclusiones
