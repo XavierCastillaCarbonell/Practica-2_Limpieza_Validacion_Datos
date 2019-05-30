@@ -2,11 +2,14 @@
 title: "Informe Suicidios"
 author: "Ana Blanes Martinez - Xavier Castilla Carbonell"
 date: "26/5/2019"
-output: 
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
   html_document:
-    toc: true
-    toc_depth: 4
     highlight: tango
+    toc: yes
+    toc_depth: 4
 ---
 
 ```{r setup, include=FALSE}
@@ -249,47 +252,48 @@ str(dfSuicidiosFiltered2)
 La columna suicides_100k_pop nos informa de la tasa de suicidios por cada cien mil personas (S100K), por lo que es una variable que nos permite
 comparar los disitntos registros en una misma escala.
 
-La media de S100K es de
+Calculemos la media, la mediana y la desviación estandar de S100K:
 ```{r}
 mean(dfSuicidiosFiltered$suicides_100k_pop)
-```
-
-Mientrás que la mediana es de
-```{r}
 median(dfSuicidiosFiltered$suicides_100k_pop)
-```
-
-Y su desviación estandar es de
-```{r}
 sd(dfSuicidiosFiltered$suicides_100k_pop)
 ```
 
-Y sus quantiles
+La media es bastante más grande que la mediana lo que nos indica que los valores elevados de la columna son muy elevados respecto a los valores más bajos. Esto se ve confirmado por la desviación estándar que es muy elevada, lo que indica que el rango de valores es muy disperso.
+
+Por eso si representamos los datos en un boxplot nos queda la caja aplastada en el fondo, la mayoria de los datos son bajos pero los valores extremos son muy elevados.
 ```{r}
-# Calculate the 25th, 50th, 75th, and 95th percentiles for education in the subset dataset
-quantile(dfSuicidiosFiltered$suicides_100k_pop, prob = c(.25, .50, .75, .95))
+boxplot(dfSuicidiosFiltered$suicides_100k_pop)
 ```
 
 Visualicemos la relación de estos datos con el HDI_for_year, el gdp_per_capita y el año
- ```{r}
+```{r}
 # Scatterplot relacionando Human_Development_Index y S100K
 plot(dfSuicidiosFiltered$HDI_for_year, dfSuicidiosFiltered$suicides_100k_pop, xlab = "Human_Development_Index", ylab = "S100K", pch = 16, col = "blue",
      main = " Scatterplot de Human_Development_Index vs S100K") 
- ```
+```
 
- ```{r}
+Con este gráfico relacionando el HDI con los suicidios vemos que forma una campana de gauss desviada hacia la derecha. Los países menos desarrollados (HDI < 0.55) están en menor riesgo de suicidarse y ese riesgo va aumentando hasta un punto de inflexión (HDI > 0.75) donde la tónica es de descenso. Esto nos indica que las causas de suicidio pueden estar condicionadas por los factores que alteran el desarrollo de un país hasta que alcanza cierto punto en que la mejora estatal hace descender la tasa de suicidios.
+En este caso podemos identificar que los países en desarrollo son los que están más en riesgo.
+
+```{r}
 # Scatterplot relacionando gdp_per_capita y S100K
 plot(dfSuicidiosFiltered$gdp_per_capita_USDollar, dfSuicidiosFiltered$suicides_100k_pop, xlab = "GDP per capita USDollar", ylab = "S100K", pch = 16, col = "blue",
      main = " Scatterplot de GDP per capita vs S100K") 
- ```
+```
 
- ```{r}
+En el gráfico que relaciona el PIB per capita con la tasa de suicidios apreciamos que hay un rápido descenso de los suicidios a medida que aumenta la renta de los individuos pero sobre los 60K de renta la caída se convierte en una linea recta.
+
+Esto nos indica que el nivel de vida es una de las causas principales de suicidio entre las rentas más bajas pero se vuelve más indiferente cuan más alto es, indicando que existen otros factores a tener en cuenta.
+
+
+```{r}
 # Scatterplot relacionando año y S100K
 plot(dfSuicidiosFiltered$year, dfSuicidiosFiltered$suicides_100k_pop, xlab = "Human_Development_Index", ylab = "Año", pch = 16, col = "blue",
      main = " Scatterplot de Año vs S100K") 
- ```
+```
 
-**SACAR CONCLUISIONES DE LOS RESULTADOS**
+En el gráfico que relaciona los suicidios con los años apreciamos que no hay relación alguna entre las dos variables y los valores que destacan se deberán a factores alternativos.
 
 
 #### Analisis por generation
@@ -298,7 +302,7 @@ mostraremos el número de suicidios totales y relativos e identificaremos que ge
 
 ```{r}
 #Mostrar generaciones disponibles
-factor(dfSuicidiosFiltered$generation)
+#table(dfSuicidiosFiltered$generation)
 ```
 
 ```{r}
@@ -312,7 +316,7 @@ aggregate(dfSuicidiosFiltered, by = dfSuicidiosFiltered$generation)
 
 Comprovemos la desviación estandar entre las generaciones
 ```{r}
-sd(dfSuicidiosFiltered$suicides_100k_pop)
+#sd(dfSuicidiosFiltered$suicides_100k_pop)
 ```
 
 **SACAR CONCLUISIONES DE LOS RESULTADOS**
