@@ -196,9 +196,9 @@ limpieza y validación) para su posterior análisis.
 \hypertarget{resolucion}{%
 \subsection{2. Resolución}\label{resolucion}}
 
-\hypertarget{identificar-el-probla-y-objetivos-del-analisis}{%
-\subsubsection{2.1 Identificar el probla y objetivos del
-análisis}\label{identificar-el-probla-y-objetivos-del-analisis}}
+\hypertarget{identificar-el-problema-y-objetivos-del-analisis}{%
+\subsubsection{2.1 Identificar el problema y objetivos del
+análisis}\label{identificar-el-problema-y-objetivos-del-analisis}}
 
 Los suicidios son uno de los principales problemas de la sanidad pública
 presente en todos los países del mundo independientemente de su nivel
@@ -213,16 +213,10 @@ grupo de población con el fin de ayudar a enfocar futuros proyectos a
 identificar las causas del suicidio en los grupos más desfavorecidos
 
 Para ello mostraremos y compararemos los distintos grupos de población
-en base a: + Su generación + Su sexo + Su grupo de edades + Su
-gdb\_per\_capita + Su continente
+en base a: + Su sexo + Su gdb\_per\_capita + Su año + Su HDI
 
-Además crearemos un modelo regresivo con los objetivos de: + Predecir la
-tasa de suicidios de un país en los próximos años + Completar los datos
-de HDI for year
-
-Y para finalizar buscaremos y compararemos países parecidos pero con
-tasas de suicidios muy dispares e intentaremos identificar las causas de
-este comportamiento si es que existen.
+Además crearemos un modelo regresivo con los objetivos de: + Completar
+los datos de HDI for year
 
 \hypertarget{descripcion-del-dataset}{%
 \subsubsection{2.2 Descripción del
@@ -281,8 +275,10 @@ Instalamos las librerias que necesitaremos durante el desarrollo:
 \begin{Highlighting}[]
 \CommentTok{#Preparación del análisis}
 \CommentTok{#install.packages("countrycode") ##Es necesario instalar el package para poder ejecutar el código}
+\CommentTok{#install.packages("ggplot2")}
 \KeywordTok{library}\NormalTok{(readr)}
 \KeywordTok{library}\NormalTok{(countrycode)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
 
 \KeywordTok{library}\NormalTok{(plyr)}
 \KeywordTok{library}\NormalTok{(dplyr)}
@@ -650,7 +646,16 @@ Y nos quedamos con las columnas deseadas:
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{Mover esta función a un fichero de funciones}
+Si hay algo que destaca en el dataset es que esta columna HDI, a pesar
+de su importancia, presenta muchos valores NA y esto se convierte en un
+problema para el análisis que queremos realizar. Si observamos el
+dataset también vemos que los datos se presentan cada 5 años, y es en
+esos huecos en los que aparece NA. Como técnica de tratamiento de los
+datos hemos optado para esos huecos rellenarlos con los valores medios a
+partir de los datos existentes anterior y posterior para cada uno de los
+países. Aunque existen en R diferentes librerías para la realización de
+este tipo de acciones, hemos optado por un desarrollo ad-hoc que se
+ajuste perfectamente a nuestras necesidades. La función es la siguiente:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -856,55 +861,210 @@ En el gráfico que relaciona los suicidios con los años apreciamos que no
 hay relación alguna entre las dos variables y los valores que destacan
 se deberán a factores alternativos.
 
-\hypertarget{analisis-por-generation}{%
-\paragraph{Analisis por generation}\label{analisis-por-generation}}
+\hypertarget{analisis-por-genero}{%
+\paragraph{Análisis por genero}\label{analisis-por-genero}}
 
-En este apartado haremos un seguimiento y comparación de las distintas
-generaciones. Primero agruparemos los datos por generaciones,
-mostraremos el número de suicidios totales y relativos e identificaremos
-que generación ha sufrido mayor riesgo.
+Analizamos el dataset y de las columnas disponibles, detectamos las que
+necesitamos para esta acción especíﬁca. Seleccionamos las columnas:
+``country'', ``year'',''sex'',''suicides\_no'', es decir, el país, el
+año, el sexo y el número de suicidios registrados. Para facilitar el
+análisis de los datos posterior, creamos la columna yearRange5Years que
+discretiza la columna year en valores de 5 en 5 años.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#Mostrar generaciones disponibles}
-\CommentTok{#table(dfSuicidiosFiltered$generation)}
+\NormalTok{keeps <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"country"}\NormalTok{, }\StringTok{"year"}\NormalTok{,}\StringTok{"sex"}\NormalTok{,}\StringTok{"suicides_no"}\NormalTok{)}
+\NormalTok{dfSuicidiosFilteredGenre <-}\StringTok{ }\NormalTok{dfSuicidios[keeps]}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#Agrupar por generaciones, con todas las columnas posibles. Media de HDI, media de suicides_100k_pop y media de gdp_per_capita, sexo y año}
-\CommentTok{#aggregate(dfSuicidiosFiltered, by = dfSuicidiosFiltered$generation)}
+\NormalTok{dfSuicidiosFilteredGenre}\OperatorTok{$}\NormalTok{yearRange5Years<-}\KeywordTok{cut}\NormalTok{(dfSuicidiosFilteredGenre}\OperatorTok{$}\NormalTok{year, }\KeywordTok{c}\NormalTok{(}\DecValTok{1980}\NormalTok{,}\DecValTok{1985}\NormalTok{,}\DecValTok{1990}\NormalTok{,}\DecValTok{1995}\NormalTok{,}\DecValTok{2000}\NormalTok{,}\DecValTok{2005}\NormalTok{,}\DecValTok{2010}\NormalTok{,}\DecValTok{2015}\NormalTok{,}\DecValTok{2020}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
+
+Como queremos hacer el estudio con todos los países del mundo,
+realizamos una suma agrupada por únicamente por sexo y rango de años, de
+manera que obtenemos una lista con sexo, período, y suma total
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#Grafica de barras de los suicidios totales y los suicidios relativos ordenando las generaciones de vieja a nueva}
+\NormalTok{dfSuicidiosFilteredSum <-}\StringTok{ }\KeywordTok{ddply}\NormalTok{(dfSuicidiosFilteredGenre, .(sex,yearRange5Years), summarize,  }\DataTypeTok{sum_suicides_no=}\KeywordTok{sum}\NormalTok{(suicides_no))}
 \end{Highlighting}
 \end{Shaded}
 
-Comprovemos la desviación estandar entre las generaciones
+Si analizamos el dataset obtenido, y teniendo en cuenta que el último
+año registrado y solo en algunos países es el 2016, estimamos oportuno
+eliminar este rango, al no estar completo prácticamente y no estar
+disponible para todos los países, por lo que puede desvirtuar los
+resultados obtenidos. Por tanto eliminamos la ﬁla correspondiente al
+período 2015-2020.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{#sd(dfSuicidiosFiltered$suicides_100k_pop)}
+\NormalTok{dfSuicidiosFilteredYears <-}\StringTok{ }\NormalTok{dfSuicidiosFilteredSum[dfSuicidiosFilteredSum[,}\StringTok{"yearRange5Years"}\NormalTok{]}\OperatorTok{!=}\StringTok{"(2015,2020]"}\NormalTok{,]}
 \end{Highlighting}
 \end{Shaded}
 
-\textbf{SACAR CONCLUISIONES DE LOS RESULTADOS}
+A continuación obtenemos a modo de información estadística, los valores
+para sexo hombre o mujer. En este momento ya podemos observar datos como
+media, mediana, cuartiles, etc. lo que nos permite ya decir que hay una
+gran diferencia en el número de suicidios entre hombres y mujeres.
 
-\hypertarget{pruebas-estadisticas}{%
-\subsubsection{2.6 Pruebas estadísticas}\label{pruebas-estadisticas}}
+Para continuar con la demostración de esta asunción, obtenemos un
+diagrama de cajas en los que podemos ver representados estos elementos.
 
-\hypertarget{representacion-visual}{%
-\subsubsection{2.7 Representación visual}\label{representacion-visual}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(dfSuicidiosFilteredYears[dfSuicidiosFilteredYears[,}\StringTok{"sex"}\NormalTok{]}\OperatorTok{==}\StringTok{"female"}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      sex       yearRange5Years sum_suicides_no 
+##  female:7   (1980,1985]:1      Min.   : 32479  
+##  male  :0   (1985,1990]:1      1st Qu.:225621  
+##             (1990,1995]:1      Median :258556  
+##             (1995,2000]:1      Mean   :222287  
+##             (2000,2005]:1      3rd Qu.:268960  
+##             (2005,2010]:1      Max.   :275809  
+##             (Other)    :1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(dfSuicidiosFilteredYears[dfSuicidiosFilteredYears[,}\StringTok{"sex"}\NormalTok{]}\OperatorTok{==}\StringTok{"male"}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      sex       yearRange5Years sum_suicides_no 
+##  female:0   (1980,1985]:1      Min.   : 83584  
+##  male  :7   (1985,1990]:1      1st Qu.:688450  
+##             (1990,1995]:1      Median :858577  
+##             (1995,2000]:1      Mean   :739544  
+##             (2000,2005]:1      3rd Qu.:942274  
+##             (2005,2010]:1      Max.   :973203  
+##             (Other)    :1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxplot}\NormalTok{(sum_suicides_no}\OperatorTok{~}\NormalTok{sex,}\DataTypeTok{data=}\NormalTok{dfSuicidiosFilteredYears, }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{30000}\NormalTok{, }\DecValTok{1200000}\NormalTok{), }\DataTypeTok{main=}\StringTok{"Suicidios por sexo durante 40 años a nivel mundial"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"Sexo"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Suicidios"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Informe_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+Destaca la presencia de outliers para ambos sexos, que correspondencia
+con los valores del primer período 1980-1985. Esto nos lleva a
+plantearnos que posiblemente la cifra para este período no esté
+disponible para todos los países además que posiblemente en esos años no
+se llevase un recuento muy preciso de estos datos, de manera que en base
+a esto podríamos plantearnos la eliminación de este registro. Si
+eliminamos este rango, podemos volver a obtener los datos estadísticos y
+el diagrama de cajas y ver las diferencias.
+
+Finalmente, hacemos uso de un diagrama de barras para observar de manera
+clara las diferencias del número de sucidios a lo largo de los años.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(dfSuicidiosFilteredYears, }\KeywordTok{aes}\NormalTok{(yearRange5Years, sum_suicides_no, }\DataTypeTok{fill =}\NormalTok{ sex)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{"identity"}\NormalTok{, }\DataTypeTok{width =} \FloatTok{0.2}\NormalTok{, }\DataTypeTok{position =} \StringTok{"dodge"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\KeywordTok{list}\NormalTok{(}\DataTypeTok{x =} \StringTok{"x"}\NormalTok{, }\DataTypeTok{y =} \StringTok{"count"}\NormalTok{,}\DataTypeTok{fill =} \StringTok{"group"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Informe_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 \hypertarget{conclusiones}{%
 \subsubsection{2.8 Conclusiones}\label{conclusiones}}
 
+\textbf{TODO}
+
+\hypertarget{prediccion-del-hdi-en-europa-en-los-proximos-anos}{%
+\subsection{3. Predicción del HDI en Europa en los próximos
+años}\label{prediccion-del-hdi-en-europa-en-los-proximos-anos}}
+
+El siguiente análisis cambia el enfoque completamente, pero nos
+permitirá adquirir una información que será de utilidad en otros
+posibles análisis posteriores. Es por ello que estimamos que merece la
+pena profundidar un poco en el contenido de este dato y sus
+implicaciones. Para ello vamos a realizar una predicción de cómo va a
+evolucionar el HDI en Europa en los próximos años. Para ello hacemos un
+ﬁltrado de de las columnas que necesitamos para este análisis:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Predicción del HDI en Europa en los próximos años}
+\NormalTok{keeps <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"country"}\NormalTok{, }\StringTok{"continent"}\NormalTok{,}\StringTok{"year"}\NormalTok{,}\StringTok{"HDI_for_year"}\NormalTok{)}
+\NormalTok{dfHDI <-}\StringTok{ }\NormalTok{dfSuicidios[keeps]}
+
+\NormalTok{dfHDIFiltered <-}\StringTok{ }\NormalTok{dfHDI[dfHDI[,}\StringTok{"continent"}\NormalTok{]}\OperatorTok{==}\StringTok{"Europe"}\NormalTok{,]}
+\end{Highlighting}
+\end{Shaded}
+
+Llamamos la función \emph{completeHDI\_For\_YearDatoPosteriorMedia},
+definida en apartados anteriores
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfHDIFilteredComplete <-}\StringTok{ }\KeywordTok{completeHDI_For_YearDatoPosteriorMedia}\NormalTok{(dfHDIFiltered)}
+\end{Highlighting}
+\end{Shaded}
+
+Llegado a este punto obtenemos un listado de los países de Europa, con
+su año, su HDI calculado en base a valores medios del año anterior y
+posterior de cada país Como aún así obtenemos algunos datos NA en lo
+referente a los últimos años, los ﬁltramos. Al ﬁn y al cabo nuestro
+análisis predictivo nos ayudará a ``completar'' estos datos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfHDIFilteredCompleteWithoutNA <-}\StringTok{ }\NormalTok{dfHDIFilteredComplete[}\KeywordTok{complete.cases}\NormalTok{(dfHDIFilteredComplete), ]}
+\end{Highlighting}
+\end{Shaded}
+
+Finalmente realizamos una media de todos los valores disponibles para
+cada uno de los años:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dfHDIFilteredCompleteWithoutNAByYear <-}\StringTok{ }\KeywordTok{ddply}\NormalTok{(dfHDIFilteredCompleteWithoutNA, .(year), summarize,  }\DataTypeTok{HDI_for_year=}\KeywordTok{mean}\NormalTok{(HDI_for_year, }\DataTypeTok{na.rm =} \OtherTok{TRUE}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Una vez obtenidos estos valores disponemos de un dataset compuesto por
+\textbf{year} y \textbf{HDI\_for\_year} y a continuación creamos un
+modelo de regresión lineal basado en esos datos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{model <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(HDI_for_year }\OperatorTok{~}\StringTok{ }\NormalTok{year, }\DataTypeTok{data=}\NormalTok{dfHDIFilteredCompleteWithoutNAByYear)}
+\end{Highlighting}
+\end{Shaded}
+
+Como carecemos de valores a partir del 2015, ejecutamos una predicción
+en base al model anterior para predecir los valores de HDI para los
+años: 2015, 2016, 2017, 2018, 2019, 2020
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{new.df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{year=}\KeywordTok{c}\NormalTok{(}\DecValTok{2015}\NormalTok{,}\DecValTok{2016}\NormalTok{,}\DecValTok{2017}\NormalTok{,}\DecValTok{2018}\NormalTok{,}\DecValTok{2019}\NormalTok{,}\DecValTok{2020}\NormalTok{))}
+\KeywordTok{predict}\NormalTok{(model, new.df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1         2         3         4         5         6 
+## 0.8696999 0.8740208 0.8783417 0.8826626 0.8869835 0.8913043
+\end{verbatim}
+
+Observamos que continúa la tendencia detectada con los años disponibles
+de un pequeño incremento en los años siguientes
+
 \hypertarget{recursos}{%
-\subsection{3. Recursos}\label{recursos}}
+\subsection{4. Recursos}\label{recursos}}
 
 \emph{Dataset}\\
 \url{https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016}

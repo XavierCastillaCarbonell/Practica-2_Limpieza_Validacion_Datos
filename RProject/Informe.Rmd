@@ -3,7 +3,10 @@ title: "Informe Suicidios"
 author: "Ana Blanes Martinez - Xavier Castilla Carbonell"
 date: "26/5/2019"
 output:
-  html_document:
+  word_document:
+    toc: yes
+    toc_depth: '4'
+  pdf_document:
     highlight: tango
     toc: yes
     toc_depth: 4
