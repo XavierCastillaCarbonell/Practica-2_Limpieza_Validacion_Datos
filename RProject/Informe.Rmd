@@ -298,6 +298,20 @@ En el gráfico que relaciona los suicidios con los años apreciamos que no hay r
 #### Análisis por genero
 
 Analizamos el dataset y de las columnas disponibles, detectamos las que necesitamos para esta acción especíﬁca. Seleccionamos las columnas: "country", “year”,”sex”,”suicides_no”, es decir, el país, el año, el sexo y el número de suicidios registrados.
+
+De manera previa al análisis observamos los diferentes valores de cara a identificar valores nulos que puedan desvirtuar nuestros resultados. Valores NA no hay pero sí que vemos la existencia de valores "0", por tanto vamos a hacer un estudio previo para clarificar que los valores 0 son valores 0 reales (no hubo suicidios para ese país-año-franja de edad concreto) o estamos hablando de pérdida de datos.
+
+Para ello primero seleccionamos todos los países que tienen valores 0 en la columna suicidios_no. Aquí observamos que hay muchos países, pero obviamente no es improbable que haya países que con franjas de edad 5-14 años o +75 en los que no se haya producido suicidios en algún año, así que eliminamos estas dos franjas de nuestro estudio preliminar.
+
+Una vez realizados estos pasos, obtenemos esta lista:
+
+Albania, Antigua and Barbuda, Armenia, Aruba, Azerbaijan, Bahamas,Bahrain, Barbados, Belize, Bosnia and Herzegovina, Cabo Verde, Costa Rica, Cyprus, Dominica, Fiji, Georgia, Greece, Grenada, Guatemala, Guyana, Iceland, Jamaica, Kiribati, Kuwait, Luxembourg, Macau, Maldives,Malta, Mauritius, Montenegro, Oman, Panama, Paraguay,Qatar,Saint Kitts and Nevis, Saint Lucia, Saint Vincent and Grenadines, San Marino, Seychelles, Slovakia, Suriname,Trinidad and Tobago,Turkmenistan,United Arab Emirates
+
+Es posible que los ceros se deban a datos perdidos, pero lo cierto es que todos estos países que presentan valores 0 son países de poca extensión y con poca población, por tanto puede encajar que haya alguna franja de edad de las todavía disponibles para algún año que no haya habido suicidios.
+
+De manera que concluimos que los valores 0 que figuran en el dataset se deben a que el número de suicidios para ese país, franja de edad, año ha sido 0.
+
+
 Para facilitar el análisis de los datos posterior, creamos la columna yearRange5Years que discretiza la columna year en valores de 5 en 5 años. 
 
 ```{r}
