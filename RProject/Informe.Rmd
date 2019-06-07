@@ -3,13 +3,17 @@ title: "Informe Suicidios"
 author: "Ana Blanes Martinez - Xavier Castilla Carbonell"
 date: "26/5/2019"
 output:
-  word_document:
+  html_document:
+    df_print: paged
     toc: yes
     toc_depth: '4'
   pdf_document:
     highlight: tango
     toc: yes
     toc_depth: 4
+  word_document:
+    toc: yes
+    toc_depth: '4'
 ---
 
 ```{r setup, include=FALSE}
@@ -353,8 +357,6 @@ Finalmente, hacemos uso de un diagrama de barras para observar de manera clara l
 ggplot(dfSuicidiosFilteredYears, aes(yearRange5Years, sum_suicides_no, fill = sex)) + geom_bar(stat = "identity", width = 0.2, position = "dodge") + labs(list(x = "x", y = "count",fill = "group"))
 ```
 
-### 2.8 Conclusiones
-**TODO**
 
 ## 3. Predicción del HDI en Europa en los próximos años
 
@@ -399,7 +401,49 @@ predict(model, new.df)
 
 Observamos que continúa la tendencia detectada con los años disponibles de un pequeño incremento en los años siguientes
 
-## 4. Recursos
+
+## 4. Análisis de varianza
+
+A continuación vamos a mostrar unos análisis ANOVA que nos permita comparar los resultados de K  'factores' con respecto a la variable dependiente o de interés, que en este caso va a ser el HDI y el número de suicidios.
+
+Para ello vamos a volver a procesar los datos disponibles
+
+```{r}
+
+# ANOVAS
+
+keeps <- c("country","continent","year","suicides_no","gdp_per_capita_USDollar","HDI_for_year")
+dfHDI <- dfSuicidios[keeps]
+
+dfHDIFilteredComplete <- completeHDI_For_YearDatoPosteriorMedia(dfHDI)
+
+dfHDIFilteredCompleteWithoutNA <- dfHDIFilteredComplete[complete.cases(dfHDIFilteredComplete), ]
+dfHDIFilteredCompleteWithoutNASum <- ddply(dfHDIFilteredCompleteWithoutNA, .(country, continent, year,gdp_per_capita_USDollar,HDI_for_year), summarize,  sum_suicides_no=sum(suicides_no))
+fit <- anova(lm(HDI_for_year ~ country+gdp_per_capita_USDollar, data=dfHDIFilteredCompleteWithoutNASum))
+fit
+```
+
+Dado que el p-valor obtenido es menor al nivel de significancia 0.05, se puede concluir que  HDI_for_year muestra diferencias significativas para los diferentes países y producto interior bruto.
+
+```{r}
+fit2 <- anova(lm(sum_suicides_no ~ country+gdp_per_capita_USDollar, data=dfHDIFilteredCompleteWithoutNASum))
+fit2
+```
+
+Dado que el p-valor obtenido es menor al nivel de significancia 0.05, se puede concluir que sum_suicides_no muestra diferencias significativas para los diferentes países y producto interior bruto.
+
+
+Finalmente realizamos un análisis multivariante MANOVA 
+
+```{r}
+fit3 <- manova(cbind(sum_suicides_no,HDI_for_year) ~ continent+gdp_per_capita_USDollar, data=dfHDIFilteredCompleteWithoutNASum)
+fit3
+```
+
+
+
+
+## 5. Recursos
 
 *Dataset*  
 https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016
