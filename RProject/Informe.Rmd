@@ -43,6 +43,7 @@ Para ello desarrollaremos con un caso práctico las seis etapas de un proyecto a
 
 ### 1.3 Competencias
 Así, las competencias del Máster en Data Science que se desarrollan son: 
+
 + Capacidad de analizar un problema en el nivel de abstracción adecuado a cada situación y aplicar las habilidades y conocimientos adquiridos para abordarlo y resolverlo. 
 + Capacidad para aplicar las técnicas especíﬁcas de tratamiento de datos (integración, transformación, limpieza y validación) para su posterior análisis.
 
@@ -53,12 +54,15 @@ Los suicidios son uno de los principales problemas de la sanidad pública presen
 La finalidad del análisis es generar un informe sobre el risgo de cada grupo de población con el fin de ayudar a enfocar futuros proyectos a identificar las causas del suicidio en los grupos más desfavorecidos
 
 Para ello mostraremos y compararemos los distintos grupos de población en base a: 
+
 + Su sexo 
 + Su gdb_per_capita 
 + Su año 
 + Su HDI 
++ **HACER MAS**
 
 Además crearemos un modelo regresivo con los objetivos de: 
+
 + Completar los datos de HDI for year
   
 
@@ -263,9 +267,9 @@ median(dfSuicidiosFiltered$suicides_100k_pop)
 sd(dfSuicidiosFiltered$suicides_100k_pop)
 ```
 
-La media es bastante más grande que la mediana lo que nos indica que los valores elevados de la columna son muy elevados respecto a los valores más bajos. Esto se ve confirmado por la desviación estándar que es muy elevada, lo que indica que el rango de valores es muy disperso.
+La media es bastante más grande que la mediana lo que nos indica que los valores elevados de la columna son muy elevados respecto a los valores más bajos. Esto se ve confirmado por la desviación estándar que es muy elevada, lo que indica que el rango de valores es muy disperso. 
 
-Por eso si representamos los datos en un boxplot nos queda la caja aplastada en el fondo, la mayoria de los datos son bajos pero los valores extremos son muy elevados.
+Por eso si representamos los datos en un boxplot nos queda la caja aplastada en el fondo, la mayoria de los datos son bajos pero los valores extremos son muy elevados. Aún así no creemos que sea necesario eliminar estos valores extremos ya que no dejan de ser valores reales (provinientes de fuentes como la *Organización Mundial de la Salud*) y el objetivo de nuestro estudio es identificar las causas que llevan al suicidio y no podemos obviar conjuntos de datos donde se muestra la mayor tasa de mortalidad.
 ```{r}
 boxplot(dfSuicidiosFiltered$suicides_100k_pop)
 ```
@@ -282,7 +286,7 @@ En este caso podemos identificar que los países en desarrollo son los que está
 
 ```{r}
 # Scatterplot relacionando gdp_per_capita y S100K
-plot(dfSuicidiosFiltered$gdp_per_capita_USDollar, dfSuicidiosFiltered$suicides_100k_pop, xlab = "GDP per capita USDollar", ylab = "S100K", pch = 16, col = "blue",
+plot(dfSuicidiosFiltered$gdp_per_capita_USDollar, dfSuicidiosFiltered$suicides_100k_pop, xlab = "GDP per capita USDollar", ylab = "", pch = 16, col = "blue",
      main = " Scatterplot de GDP per capita vs S100K") 
 ```
 
@@ -293,11 +297,12 @@ Esto nos indica que el nivel de vida es una de las causas principales de suicidi
 
 ```{r}
 # Scatterplot relacionando año y S100K
-plot(dfSuicidiosFiltered$year, dfSuicidiosFiltered$suicides_100k_pop, xlab = "Human_Development_Index", ylab = "Año", pch = 16, col = "blue",
+plot(dfSuicidiosFiltered$year, dfSuicidiosFiltered$suicides_100k_pop, xlab = "Año", ylab = "S100K", pch = 16, col = "blue",
      main = " Scatterplot de Año vs S100K") 
 ```
 
 En el gráfico que relaciona los suicidios con los años apreciamos que no hay relación alguna entre las dos variables y los valores que destacan se deberán a factores alternativos.
+
 
 #### Análisis por genero
 
