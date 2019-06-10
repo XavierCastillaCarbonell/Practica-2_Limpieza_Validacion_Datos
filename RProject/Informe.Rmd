@@ -3,15 +3,15 @@ title: "Informe Suicidios"
 author: "Ana Blanes Martinez - Xavier Castilla Carbonell"
 date: "26/5/2019"
 output:
-  html_document:
-    df_print: paged
+  word_document:
     toc: yes
     toc_depth: '4'
   pdf_document:
     highlight: tango
     toc: yes
     toc_depth: 4
-  word_document:
+  html_document:
+    df_print: paged
     toc: yes
     toc_depth: '4'
 ---
@@ -59,7 +59,7 @@ Para ello mostraremos y compararemos los distintos grupos de población en base 
 + Su gdb_per_capita 
 + Su año 
 + Su HDI 
-+ **HACER MAS**
++ Su rango de edad
 
 Además crearemos un modelo regresivo con los objetivos de: 
 
@@ -121,6 +121,7 @@ Por eso eliminaremos las columnas: Country-year, suicides_no y gdp_for_year ($).
 Y trabajaremos con las columnas: *country*, *year*, *sex*, *age*, *suicides_100k_pop*, *HDI_for_year*, *gdp_per_capita_USDollar* y *generation* y agregaremos la columna *continent* para ubicar los distintos países en zonas geográficas.
 
 Analicemos cada una de estas variables:
+
 + **Country**
 ```{r}
 #Informe de country
@@ -243,7 +244,7 @@ Completamos los datos de *HDI_For_Year*
 dfSuicidiosFiltered <- completeHDI_For_YearDatoPosteriorMedia(dfSuicidiosFiltered)
 ```
 
-Agrupamos los países en periodos de 5 años para poder compararlos mejor **AÑADIR EXPLICACIÓN ARRIBA**
+Agrupamos los países en periodos de 5 años, esto lo hacemos porque nos faltan algunos registros y así tenemos toda la información mediante las medias.
 ```{r}
 dfSuicidiosFiltered$yearRange5Years<-cut(dfSuicidiosFiltered$year, c(1980,1985,1990,1995,2000,2005,2010,2015,2020))
 
@@ -274,7 +275,7 @@ Por eso si representamos los datos en un boxplot nos queda la caja aplastada en 
 boxplot(dfSuicidiosFiltered$suicides_100k_pop)
 ```
 
-Visualicemos la relación de estos datos con el HDI_for_year, el gdp_per_capita y el año
+Visualicemos la relación de estos datos con el resto de variables (exceptuando Country y Sex)
 ```{r}
 # Scatterplot relacionando Human_Development_Index y S100K
 plot(dfSuicidiosFiltered$HDI_for_year, dfSuicidiosFiltered$suicides_100k_pop, xlab = "Human_Development_Index", ylab = "S100K", pch = 16, col = "blue",
@@ -283,6 +284,16 @@ plot(dfSuicidiosFiltered$HDI_for_year, dfSuicidiosFiltered$suicides_100k_pop, xl
 
 Con este gráfico relacionando el HDI con los suicidios vemos que forma una campana de gauss desviada hacia la derecha. Los países menos desarrollados (HDI < 0.55) están en menor riesgo de suicidarse y ese riesgo va aumentando hasta un punto de inflexión (HDI > 0.75) donde la tónica es de descenso. Esto nos indica que las causas de suicidio pueden estar condicionadas por los factores que alteran el desarrollo de un país hasta que alcanza cierto punto en que la mejora estatal hace descender la tasa de suicidios.
 En este caso podemos identificar que los países en desarrollo son los que están más en riesgo.
+
+Comprobaremos las observaciones con la hipotesis nula de que no existe relacióne entre las dos variables observadas con una significancia del 0.05.
+```{r}
+HDI.lm = lm(dfSuicidiosFiltered$suicides_100k_pop ~ dfSuicidiosFiltered$HDI_for_year, data=faithful)
+summary(HDI.lm)
+```
+
+Como el p-value es menor a 0.05 rechazamos la hipotesis nula y validamos que existe una fuerte relación entre las dos variables.
+
+
 
 ```{r}
 # Scatterplot relacionando gdp_per_capita y S100K
@@ -294,6 +305,15 @@ En el gráfico que relaciona el PIB per capita con la tasa de suicidios apreciam
 
 Esto nos indica que el nivel de vida es una de las causas principales de suicidio entre las rentas más bajas pero se vuelve más indiferente cuan más alto es, indicando que existen otros factores a tener en cuenta.
 
+Comprobaremos las observaciones con la hipotesis nula de que no existe relacióne entre las dos variables observadas con una significancia del 0.05.
+```{r}
+GDP.lm = lm(dfSuicidiosFiltered$suicides_100k_pop ~ dfSuicidiosFiltered$gdp_per_capita_USDollar, data=faithful)
+summary(GDP.lm)
+```
+
+Como el p-value es mayor que 0.05 validamos la hipotesis nula por lo que no existe una fuerte relación entre las dos variables y no es un medidor adecuado a diferencia de nuestra observación original.
+
+
 
 ```{r}
 # Scatterplot relacionando año y S100K
@@ -302,6 +322,50 @@ plot(dfSuicidiosFiltered$year, dfSuicidiosFiltered$suicides_100k_pop, xlab = "A�
 ```
 
 En el gráfico que relaciona los suicidios con los años apreciamos que no hay relación alguna entre las dos variables y los valores que destacan se deberán a factores alternativos.
+
+Comprobaremos las observaciones con la hipotesis nula de que no existe relacióne entre las dos variables observadas con una significancia del 0.05.
+```{r}
+YEAR.lm = lm(dfSuicidiosFiltered$suicides_100k_pop ~ dfSuicidiosFiltered$year, data=faithful)
+summary(YEAR.lm)
+```
+
+En este caso, se rechaza la hipotesis nula y se encuentra una fuerte relación entre el año y la tasa de suicidios
+
+
+```{r}
+levels((dfSuicidios$age))
+
+# Scatterplot relacionando Edad y S100K
+plot(relevel(dfSuicidiosFiltered$age, "5-14 years"), dfSuicidiosFiltered$suicides_100k_pop, xlab = "Age", ylab = "S100K", pch = 16, col = "blue",
+     main = " Scatterplot de Edad vs S100K")
+```
+
+Observamos en el conjunto de boxplots para cada rango de edad ascendente que existe una tendencia al alza de suicidios a medida que la edad de la población aumenta así como los casos extremos que también aumentan con la edad.
+
+
+Comprobaremos las observaciones con la hipotesis nula de que no existe relacióne entre las dos variables observadas con una significancia del 0.05.
+```{r}
+AGE.lm = lm(dfSuicidiosFiltered$suicides_100k_pop ~ dfSuicidiosFiltered$age, data=faithful)
+summary(AGE.lm)
+```
+
+En este caso, se rechaza la hipotesis nula y se encuentra una fuerte relación entre la edad y la tasa de suicidios
+
+
+
+
+
+Ahora comprobemos la relación entre los S100k y todas las variables del dataset que hemos visualizado.
+
+```{r}
+TOTAL.lm = lm(dfSuicidiosFiltered$suicides_100k_pop ~ dfSuicidiosFiltered$year + dfSuicidiosFiltered$gdp_per_capita_USDollar + dfSuicidiosFiltered$HDI_for_year + dfSuicidiosFiltered$age, data=faithful)
+summary(TOTAL.lm)
+```
+
+Como podemos observar todas las variables presentan una alta relación con la tasa de suicidios, con un p-value mucho menor de 0.05, es interesante el caso de *gdp_per_capita_USDollar* que por si mismo no presentaba una relación con la tasa de suicidios que si es significativa dentro del conjunto de variables.
+
+
+Esto es debido a que la causa de suicidios no se puede describir correctamente como causa de un solo factor si no de la relación de distintos factores entrelazados.
 
 
 #### Análisis por genero
