@@ -1,6 +1,6 @@
 # Práctica 2: Limpieza y validación de los datos
 
-__Por Xavier Castilla Carbonell y Ana Blanes Martínez.__
+__Por Xavier Castilla Carbonell y Ana Blanes Martínez__
 
 
 Para realizar la práctica hemos escogido el dataset https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016 de suicidios y hemos realizado un informe sobre la relación de las variables con el objetivo de conocer las causas. 
