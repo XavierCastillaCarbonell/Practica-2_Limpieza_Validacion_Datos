@@ -2,11 +2,16 @@
 
 # ANOVAS
 
+install.packages("countrycode")
+install.packages("moments")
+library(countrycode)
+library(dplyr)
+library(plyr)
+library(moments)
 
 dfHDI <- read.csv("/Users/anablanesmartinez/MasterCienciaDatos/TipologiaCicloVidaDatos/PRAC2/suicide.csv", encoding = "UTF-8", header = TRUE);
 
-#install.packages("countrycode")
-#library(countrycode)
+
 
 dfHDI$continent <- countrycode(sourcevar = dfHDI[, "country"], origin = "country.name", destination = "continent")
 colnames(dfHDI)[colnames(dfHDI)=="gdp_per_capita...."] <- "gdp_per_capita_USDollar"
@@ -18,8 +23,6 @@ colnames(dfHDI)[colnames(dfHDI)=="suicides.100k.pop"] <- "suicides_100k_pop"
 keeps <- c("country","continent","year","suicides_no","gdp_per_capita_USDollar","HDI_for_year")
 dfHDI <- dfHDI[keeps]
 
-#library(dplyr)
-#library(plyr)
 
 
 completeHDI_For_YearDatoPosteriorMedia <- function(df){
@@ -80,8 +83,6 @@ fit
 fit2 <- anova(lm(sum_suicides_no ~ country+gdp_per_capita_USDollar, data=dfHDIFilteredCompleteWithoutNASum))
 fit2
 #Dado que el p-valor obtenido es menor al nivel de significancia 0.05, se puede concluir que sum_suicides_no muestra diferencias significativas para los diferentes países y producto interior bruto.
-
-fit3 <- manova(cbind(sum_suicides_no,HDI_for_year) ~ continent+gdp_per_capita_USDollar, data=dfHDIFilteredCompleteWithoutNASum)
 
 
 

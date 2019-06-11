@@ -3,13 +3,13 @@ title: "Informe Suicidios"
 author: "Ana Blanes Martinez - Xavier Castilla Carbonell"
 date: "26/5/2019"
 output:
-  word_document:
-    toc: yes
-    toc_depth: '4'
   pdf_document:
     highlight: tango
     toc: yes
     toc_depth: 4
+  word_document:
+    toc: yes
+    toc_depth: '4'
   html_document:
     df_print: paged
     toc: yes
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## 1. Detalles de la actividad
 ### 1.1 Descipción
-En esta actividad se elabora un caso práctico, consistente en el tratamiento de un conjunto de datos (en inglés, dataset), orientado a aprender a identiﬁcar los datos relevantes para un proyecto analítico y usar las herramientas de integración, limpieza, validación y análisis de las mismas.
+En esta actividad se elabora un caso práctico, consistente en el tratamiento de un conjunto de datos (en inglés, dataset), orientado a aprender a identificar los datos relevantes para un proyecto analítico y usar las herramientas de integración, limpieza, validación y análisis de las mismas.
 
 Para resolver la actividad se integrará un informe donde esten unificados los conceptos teoricos, objetivos y resolución con código R.
 
@@ -45,7 +45,7 @@ Para ello desarrollaremos con un caso práctico las seis etapas de un proyecto a
 Así, las competencias del Máster en Data Science que se desarrollan son: 
 
 + Capacidad de analizar un problema en el nivel de abstracción adecuado a cada situación y aplicar las habilidades y conocimientos adquiridos para abordarlo y resolverlo. 
-+ Capacidad para aplicar las técnicas especíﬁcas de tratamiento de datos (integración, transformación, limpieza y validación) para su posterior análisis.
++ Capacidad para aplicar las técnicas específicas de tratamiento de datos (integración, transformación, limpieza y validación) para su posterior análisis.
 
 ## 2. Resolución
 ### 2.1 Identificar el problema y objetivos del análisis
@@ -370,7 +370,7 @@ Esto es debido a que la causa de suicidios no se puede describir correctamente c
 
 #### Análisis por genero
 
-Analizamos el dataset y de las columnas disponibles, detectamos las que necesitamos para esta acción especíﬁca. Seleccionamos las columnas: "country", “year”,”sex”,”suicides_no”, es decir, el país, el año, el sexo y el número de suicidios registrados.
+Analizamos el dataset y de las columnas disponibles, detectamos las que necesitamos para esta acción específica. Seleccionamos las columnas: "country", “year”,”sex”,”suicides_no”, es decir, el país, el año, el sexo y el número de suicidios registrados.
 
 De manera previa al análisis observamos los diferentes valores de cara a identificar valores nulos que puedan desvirtuar nuestros resultados. Valores NA no hay pero sí que vemos la existencia de valores "0", por tanto vamos a hacer un estudio previo para clarificar que los valores 0 son valores 0 reales (no hubo suicidios para ese país-año-franja de edad concreto) o estamos hablando de pérdida de datos.
 
@@ -401,7 +401,7 @@ Como queremos hacer el estudio con todos los países del mundo, realizamos una s
 dfSuicidiosFilteredSum <- ddply(dfSuicidiosFilteredGenre, .(sex,yearRange5Years), summarize,  sum_suicides_no=sum(suicides_no))
 ```
 
-Si analizamos el dataset obtenido, y teniendo en cuenta que el último año registrado y solo en algunos países es el 2016, estimamos oportuno eliminar este rango, al no estar completo prácticamente y no estar disponible para todos los países, por lo que puede desvirtuar los resultados obtenidos. Por tanto eliminamos la ﬁla correspondiente al período 2015-2020.
+Si analizamos el dataset obtenido, y teniendo en cuenta que el último año registrado y solo en algunos países es el 2016, estimamos oportuno eliminar este rango, al no estar completo prácticamente y no estar disponible para todos los países, por lo que puede desvirtuar los resultados obtenidos. Por tanto eliminamos la fila correspondiente al período 2015-2020.
 ```{r}
 dfSuicidiosFilteredYears <- dfSuicidiosFilteredSum[dfSuicidiosFilteredSum[,"yearRange5Years"]!="(2015,2020]",]
 ```
@@ -431,7 +431,7 @@ ggplot(dfSuicidiosFilteredYears, aes(yearRange5Years, sum_suicides_no, fill = se
 
 El siguiente análisis cambia el enfoque completamente, pero nos permitirá adquirir una información que será de utilidad en otros posibles análisis posteriores.
 Es por ello que estimamos que merece la pena profundidar un poco en el contenido de este dato y sus implicaciones. Para ello vamos a realizar una predicción de cómo va a evolucionar el HDI en Europa en los próximos años.
-Para ello hacemos un ﬁltrado de de las columnas que necesitamos para este análisis:
+Para ello hacemos un filtrado de de las columnas que necesitamos para este análisis:
 
 ```{r}
 # Predicción del HDI en Europa en los próximos años
@@ -447,7 +447,7 @@ dfHDIFilteredComplete <- completeHDI_For_YearDatoPosteriorMedia(dfHDIFiltered)
 ```
 
 Llegado a este punto obtenemos un listado de los países de Europa, con su año, su HDI calculado en base a valores medios del año anterior y posterior de cada país
-Como aún así obtenemos algunos datos NA en lo referente a los últimos años, los ﬁltramos. Al ﬁn y al cabo nuestro análisis predictivo nos ayudará a “completar” estos datos:
+Como aún así obtenemos algunos datos NA en lo referente a los últimos años, los filtramos. Al fin y al cabo nuestro análisis predictivo nos ayudará a “completar” estos datos:
 ```{r}
 dfHDIFilteredCompleteWithoutNA <- dfHDIFilteredComplete[complete.cases(dfHDIFilteredComplete), ]
 ```
@@ -500,15 +500,6 @@ fit2
 ```
 
 Dado que el p-valor obtenido es menor al nivel de significancia 0.05, se puede concluir que sum_suicides_no muestra diferencias significativas para los diferentes países y producto interior bruto.
-
-
-Finalmente realizamos un análisis multivariante MANOVA 
-
-```{r}
-fit3 <- manova(cbind(sum_suicides_no,HDI_for_year) ~ continent+gdp_per_capita_USDollar, data=dfHDIFilteredCompleteWithoutNASum)
-fit3
-```
-
 
 
 
